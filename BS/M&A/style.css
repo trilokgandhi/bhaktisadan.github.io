@@ -179,7 +179,7 @@ a:hover{
     justify-content: space-between;
 }
 .home-img{
-    background-image: url(DSC06769.JPG);
+    background-image: url(DSC04882.JPG);
     background-size: cover;
     background-position: center;
 }
@@ -225,7 +225,7 @@ a:hover{
     margin: 8vh 0;
 }
 .timeline-img{
-    background-image: url(DSC06153.JPG);
+    background-image: url(w2.png);
     height: 70vh;
     width: 30vw;
     background-position: center;
@@ -310,15 +310,15 @@ a:hover{
     background-position: center;
 }
 .gallery-img:nth-child(1){
-    background-image: url(DSC06059.JPG);
+    background-image: url(DSC05173.JPG);
     background-position-x: right;
 }
 .gallery-img:nth-child(3){
-    background-image: url(DSC06569.JPG);
+    background-image: url(DSC05572.JPG);
 }
 .gallery-img:nth-child(2){
     background-position-y: top;
-    background-image: url(DSC06769.JPG);
+    background-image: url(DSC04928.JPG);
 }
 @media (max-width:1000px){
     .gallery{
@@ -362,7 +362,7 @@ a:hover{
 .hands{
     height: 120vh;
     width: 100%;
-    background-image: url(DSC06173.JPG);
+    background-image: url(299.jpg);
     background-size: cover;
     background-position-y: center;
     background-attachment: fixed;
@@ -418,7 +418,7 @@ a:hover{
     display: block;
     height: 100vh;
     width: 40vw;
-    background-image: url(DSC06602.JPG);
+    background-image: url(DSC05173.JPG);
     background-size: cover;
     background-position-y: top;
     background-repeat: no-repeat;
