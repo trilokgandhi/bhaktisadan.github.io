@@ -1,0 +1,414 @@
+CREATE TABLE employee (
+
+    emp_id number(5) PRIMARY KEY,
+    employee_name varchar2(50),
+    street varchar2(20),
+    city varchar2(20)
+);
+
+-- Inserting records into the employee table with truncated street names and city names
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (1, 'Aarav Gupta', 'M. Gandhi Rd', 'Mumbai');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (2, 'Aisha Patel', 'J. Nehru St', 'Delhi');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (3, 'Arjun Singh', 'S.C. Bose Ln', 'Kolkata');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (4, 'Avani Sharma', 'S. Patel Ave', 'Ahmedabad');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (5, 'Aditya Verma', 'R. Prasad Rd', 'Bangalore');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (6, 'Ananya Reddy', 'I.G. Nagar', 'Hyderabad');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (7, 'Aryan Kumar', 'B. Singh Ln', 'Chennai');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (8, 'Amara Patel', 'J.K.R. Street', 'Lucknow');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (9, 'Akshay Sharma', 'L.B.S. Road', 'Pune');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (10, 'Anika Yadav', 'Gandhi Nagar', 'Jaipur');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (11, 'Avinash Singh', 'S. Naidu Lane', 'Chandigarh');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (12, 'Aisha Kapoor', 'R.Tagore Road', 'Kochi');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (13, 'Amit Gupta', 'K.C. Street', 'Bhopal');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (14, 'Arya Deshmukh', 'J.P. Avenue', 'Nagpur');
+INSERT INTO employee (emp_id, employee_name, street, city) VALUES (15, 'Advait Singhania', 'V. Road', 'Mysore');
+
+
+CREATE TABLE works(
+    emp_id number(5) references employee,
+    comp_id number(5),
+    salary number(8,2)
+);
+
+INSERT INTO works (emp_id, comp_id, salary) VALUES (1, 101, 50000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (2, 102, 60000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (3, 101, 55000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (4, 103, 65000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (5, 102, 52000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (6, 103, 58000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (7, 101, 60000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (8, 104, 70000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (9, 102, 62000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (10, 105, 75000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (11, 103, 67000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (12, 104, 72000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (13, 105, 78000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (14, 101, 61000.00);
+INSERT INTO works (emp_id, comp_id, salary) VALUES (15, 104, 73000.00);
+
+CREATE TABLE company(
+    comp_id number(5),
+    company_name varchar2(50),
+    city varchar2(20)
+);
+
+-- Inserting records into the company table
+INSERT INTO company (comp_id, company_name, city) VALUES (101, 'ABC Corporation', 'Mumbai');
+INSERT INTO company (comp_id, company_name, city) VALUES (102, 'XYZ Ltd', 'Delhi');
+INSERT INTO company (comp_id, company_name, city) VALUES (103, 'PQR Industries', 'Kolkata');
+INSERT INTO company (comp_id, company_name, city) VALUES (104, 'LMN Solutions', 'Ahmedabad');
+INSERT INTO company (comp_id, company_name, city) VALUES (105, 'JKL Enterprises', 'Bangalore');
+
+CREATE TABLE manager(
+    manager_id number(5) PRIMARY KEY,
+    manager_name varchar2(50)
+);
+
+-- Inserting records into the manager table
+INSERT INTO manager (manager_id, manager_name) VALUES (1, 'John Doe');
+INSERT INTO manager (manager_id, manager_name) VALUES (2, 'Jane Smith');
+INSERT INTO manager (manager_id, manager_name) VALUES (3, 'Bob Johnson');
+INSERT INTO manager (manager_id, manager_name) VALUES (4, 'Alice Brown');
+INSERT INTO manager (manager_id, manager_name) VALUES (5, 'Charlie Davis');
+
+
+CREATE TABLE manage(
+    emp_id number(5) references employee,
+    manager_id number(5) references manager
+);
+
+INSERT INTO manage (emp_id, manager_id) VALUES (1, 1); 
+INSERT INTO manage (emp_id, manager_id) VALUES (2, 2); 
+INSERT INTO manage (emp_id, manager_id) VALUES (3, 3); 
+INSERT INTO manage (emp_id, manager_id) VALUES (4, 4); 
+INSERT INTO manage (emp_id, manager_id) VALUES (5, 5); 
+
+INSERT INTO manage (emp_id, manager_id) VALUES (6, 1); 
+INSERT INTO manage (emp_id, manager_id) VALUES (7, 2); 
+INSERT INTO manage (emp_id, manager_id) VALUES (8, 3); 
+INSERT INTO manage (emp_id, manager_id) VALUES (9, 4); 
+INSERT INTO manage (emp_id, manager_id) VALUES (10, 5); 
+
+INSERT INTO manage (emp_id, manager_id) VALUES (11, 1); 
+INSERT INTO manage (emp_id, manager_id) VALUES (12, 2); 
+INSERT INTO manage (emp_id, manager_id) VALUES (13, 3); 
+INSERT INTO manage (emp_id, manager_id) VALUES (14, 4); 
+INSERT INTO manage (emp_id, manager_id) VALUES (15, 5);
+
+
+
+------------- Q1
+
+SELECT e.employee_name,w.salary from employee e, works w where e.emp_id = w.emp_id;
+
+------------
+
+SELECT 
+  e.employee_name,
+  m.manager_name,
+  (SELECT city FROM company WHERE comp_id = w.comp_id) AS company_city
+FROM 
+  employee e
+JOIN 
+  manage mg ON e.emp_id = mg.emp_id
+JOIN 
+  manager m ON mg.manager_id = m.manager_id
+JOIN 
+  works w ON e.emp_id = w.emp_id;
+  
+---------------------
+  
+SELECT e.employee_name FROM employee e
+JOIN 
+    works w ON e.emp_id = w.emp_id
+JOIN
+    company c ON c.comp_id = w.comp_id
+WHERE 
+    e.city = c.city;
+    
+-----------------  
+  
+SELECT 
+    e.employee_name,
+    e.street,
+    e.city
+FROM 
+    employee e
+JOIN 
+    works w ON e.emp_id = w.emp_id
+JOIN
+    company c ON c.comp_id = w.comp_id
+WHERE 
+    c.company_name = 'XYZ Ltd' AND w.walary >= 60000;
+    
+----------------Q2
+
+SELECT 
+    c.company_name,
+    (
+    SELECT 
+        AVG(salary) 
+    FROM 
+        works 
+    WHERE 
+        comp_id = c.comp_id
+    ) 
+    AS 
+        avg_salary 
+FROM 
+    company c;
+    
+---------------
+
+SELECT
+    e.employee_name,
+    w.salary,
+    (SELECT avg(salary) FROM works WHERE comp_id = w.comp_id) AS avg_salary
+FROM 
+    employee e 
+JOIN 
+    works w ON w.emp_id = e.emp_id
+WHERE 
+    w.salary > (SELECT avg(salary) FROM works WHERE comp_id = w.comp_id);
+    
+--------------
+
+SELECT
+    e.employee_name,
+    w.salary,
+    (SELECT max(salary) FROM works WHERE comp_id = (
+        SELECT comp_id FROM company where company_name = 'PQR Industries'
+    )) AS max_sal_pqr
+FROM 
+    employee e 
+JOIN 
+    works w ON w.emp_id = e.emp_id
+WHERE 
+    w.salary > (SELECT max(salary) FROM works WHERE comp_id = (
+        SELECT comp_id FROM company where company_name = 'PQR Industries'
+    ));
+    
+--------------
+    
+select 
+    company_name 
+from 
+    company 
+where 
+    comp_id = (select comp_id from works where salary = (select min(salary) from works));
+    
+--------------Q3
+
+CREATE OR REPLACE PROCEDURE insertEmployee(
+    emp_id IN NUMBER,
+    employee_name IN VARCHAR2,
+    street IN VARCHAR2,
+    city IN VARCHAR2
+) AS
+BEGIN
+    INSERT INTO employee VALUES (emp_id, employee_name, street, city);
+    DBMS_OUTPUT.PUT_LINE('Record Insert Operation Successful');
+END;
+/
+
+exec insertEmployee(16,'Jyot','Sama','Vadodara');
+
+select * from employee where emp_id = 16;
+
+---------------
+
+alter table employee add phone number(10);
+
+CREATE OR REPLACE PROCEDURE updPhone(
+    id IN number,
+    pn IN number
+) AS
+BEGIN
+    UPDATE employee SET phone = pn WHERE emp_id = id;
+	COMMIT;
+	dbms_output.put_line('Phone Update Successful');
+END;
+/
+
+exec updPhone(16,9998881234);
+
+select * from employee where emp_id = 16;
+
+------------------
+
+insert into manage VALUES(16,4);
+
+CREATE OR REPLACE PROCEDURE findManager(id IN number) AS
+    managerName manager.manager_name%type;
+BEGIN
+    SELECT manager_name INTO managerName FROM manager WHERE manager_id = (
+    	SELECT manager_id FROM manage WHERE emp_id = id
+    );
+	dbms_output.put_line('Manager Name = '||managerName);
+END;
+/
+
+exec findManager(16);
+
+-----------------
+
+CREATE OR REPLACE PROCEDURE getDetails(id IN number) AS
+    name employee.employee_name%type;
+    resCity employee.city%type;
+    compName company.company_name%type;
+    workCity company.city%type;
+    managerName manager.manager_name%type;
+    sal works.salary%type;
+BEGIN
+    SELECT
+    	e.employee_name,e.city,c.company_name,c.city,mg.manager_name,w.salary
+    INTO
+    	name,resCity,compName,workCity,managerName,sal   
+    FROM
+        employee e
+    JOIN
+        works w ON w.emp_id = e.emp_id
+    JOIN
+        company c ON c.comp_id = w.comp_id
+    JOIN
+        manage m ON m.emp_id = e.emp_id
+    JOIN
+        manager mg ON mg.manager_id = m.manager_id
+    WHERE e.emp_id = id;
+    
+    dbms_output.put_line('Employee Details');
+    
+    dbms_output.put_line('EMP ID : '|| id);
+    
+    dbms_output.put_line('NAME : '|| name);
+    
+    dbms_output.put_line('CITY OF RESIDENCE : '|| resCity);
+    
+    dbms_output.put_line('COMPANY : '||compName);
+    
+    dbms_output.put_line('CITY OF WORK : '||workCity);
+    
+    dbms_output.put_line('MANAGER : '||managerName);
+    
+    dbms_output.put_line('SALARY : '||sal);
+END;
+/
+
+exec getDetails(15);
+
+
+-----------------Q4
+
+CREATE TABLE student (
+    roll_no number(5),
+    contact number(10),
+    marks number(5,2)
+);
+CREATE TABLE student_copy (
+    roll_no number(5),
+    contact number(10)
+);
+CREATE TABLE student_update_copy (
+    roll_no number(5),
+    new_contact number(10),
+    old_contact number(10)
+);
+
+CREATE OR REPLACE TRIGGER afterStudentInsert
+AFTER INSERT ON student
+FOR EACH ROW
+BEGIN
+    INSERT INTO student_copy VALUES (:NEW.roll_no,:NEW.contact);
+    dbms_output.put_line('TRIGGER TRIGGERED');
+    dbms_output.put_line('RollNo : ' || :NEW.roll_no);
+    dbms_output.put_line('Contact : ' || :NEW.contact);
+END;
+/
+
+INSERT INTO student VALUES (1,9998881234,65);
+SELECT * FROM student_copy;
+
+----------------
+
+CREATE OR REPLACE TRIGGER afterStudentUpdate
+AFTER UPDATE ON student
+FOR EACH ROW
+BEGIN
+    INSERT INTO student_update_copy VALUES (:NEW.roll_no,:NEW.contact,:OLD.contact);
+    dbms_output.put_line('TRIGGER TRIGGERED');
+    dbms_output.put_line('RollNo : ' || :NEW.roll_no);
+    dbms_output.put_line('New Contact : ' || :NEW.contact);
+    dbms_output.put_line('Old Contact : ' || :OLD.contact);
+END;
+/
+
+UPDATE student SET contact = 4567894561 WHERE roll_no = 1;
+SELECT * FROM student_update_copy;
+
+
+------------------Q5
+
+ALTER TABLE student ADD (name varchar2(50), grade varchar2(1));
+
+INSERT INTO student (roll_no, contact, marks, name, grade) VALUES (1, 1234567890, 95.50, 'John Doe', 'A');
+INSERT INTO student (roll_no, contact, marks, name, grade) VALUES (2, 9876543210, 82.75, 'Jane Smith', 'B');
+INSERT INTO student (roll_no, contact, marks, name, grade) VALUES (3, 5555555555, 75.25, 'Bob Johnson', 'C');
+INSERT INTO student (roll_no, contact, marks, name, grade) VALUES (4, 1111222233, 88.00, 'Alice Brown', 'B');
+INSERT INTO student (roll_no, contact, marks, name, grade) VALUES (5, 9999888877, 93.75, 'Charlie Davis', 'A');
+INSERT INTO student (roll_no, contact, marks, name, grade) VALUES (6, 6666777788, 67.50, 'Eva White', 'D');
+INSERT INTO student (roll_no, contact, marks, name, grade) VALUES (7, 4444333322, 79.25, 'Frank Miller', 'C');
+INSERT INTO student (roll_no, contact, marks, name, grade) VALUES (8, 7777666655, 90.25, 'Grace Wilson', 'A');
+INSERT INTO student (roll_no, contact, marks, name, grade) VALUES (9, 8888999900, 84.50, 'Henry Lee', 'B');
+INSERT INTO student (roll_no, contact, marks, name, grade) VALUES (10, 1231231231, 77.00, 'Ivy Turner', 'C');
+
+
+DECLARE
+	row_count NUMBER := 0;
+    sname student.name%TYPE;
+
+BEGIN
+    FOR student_rec IN (SELECT marks FROM student WHERE marks > 70) 
+    LOOP
+        row_count := row_count + 1;
+    END LOOP;
+
+    DBMS_OUTPUT.PUT_LINE('Number of Students with Marks > 70: ' || row_count);
+END;
+/
+
+---------------------
+
+DECLARE
+    CURSOR student_cursor IS
+        SELECT *
+        FROM student;
+
+    roll_no student.roll_no%TYPE;
+    contact student.contact%TYPE;
+    marks student.marks%TYPE;
+    name student.name%TYPE;
+    grade student.grade%TYPE;
+
+    counter NUMBER := 1;
+BEGIN
+    OPEN student_cursor;
+    
+    LOOP
+        FETCH student_cursor INTO roll_no, contact, marks, name, grade;
+        
+        EXIT WHEN student_cursor%NOTFOUND AND counter = 7;
+
+		IF counter = 7 THEN
+            DBMS_OUTPUT.PUT_LINE('Roll No: ' || roll_no);
+       		DBMS_OUTPUT.PUT_LINE('Contact: ' || contact);
+        	DBMS_OUTPUT.PUT_LINE('Marks: ' || marks);
+        	DBMS_OUTPUT.PUT_LINE('Name: ' || name);
+        	DBMS_OUTPUT.PUT_LINE('Grade: ' || grade);
+            EXIT;
+		END IF;
+        counter := counter + 1;
+    END LOOP;
+
+    CLOSE student_cursor;
+END;
+/
