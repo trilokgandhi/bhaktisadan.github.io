@@ -320,3 +320,184 @@ def Put(n, count):
 getBoard()
 Put(n, 0)
 printBoard()
+
+#5 Write a program to implement Tower of Hanoi Problem.
+
+
+# Recursive Python function to solve the tower of hanoi
+
+def TowerOfHanoi(n , source, destination, auxiliary):
+	if n==1:
+		print ("Move disk 1 from source",source,"to destination",destination)
+		return
+	TowerOfHanoi(n-1, source, auxiliary, destination)
+	print ("Move disk",n,"from source",source,"to destination",destination)
+	TowerOfHanoi(n-1, auxiliary, destination, source)
+		
+n = 4
+TowerOfHanoi(n,'A','B','C') 
+
+#6: Write a prolog program for the family tree.
+
+
+parent(pam,bob).
+parent(tom,bob).
+parent(tom,liz).
+parent(bob,ann).
+parent(bob,pat).
+parent(pat,jim).
+
+female(pam).
+male(tom).
+male(bob).
+female(liz).
+female(pat).
+female(ann).
+male(jim).
+
+grandparent(GP, GC) :-
+    parent(GP, Parent),
+    parent(Parent, GC).
+
+sibling(X, Y) :-
+    parent(P, X),
+    parent(P, Y),
+    X\=Y.
+
+brother(X, Y) :-
+    male(X),
+    sibling(X, Y).
+
+sister(X, Y) :-
+    female(X),
+    sibling(X, Y).
+
+uncle(X, Z) :-
+    brother(X, Y),
+    parent(Y, Z).
+
+aunt(X, Z) :-
+    sister(X, Y),
+    parent(Y, Z).
+
+#7 Write a program to solve N-Queens problem using Prolog.
+
+
+n_queens(N, Solution) :-
+	%create a list of N dummy variabiles
+	length(Solution, N),
+
+	queen(Solution, N). %search for a configuration of N queens
+
+
+%returns a list of integer from K to N included es up2N(1,3,X) X = [1,2,3]
+up2N(N,N,[N]) :-!.
+up2N(K,N,[K|Tail]) :- K < N, K1 is K+1, up2N(K1, N, Tail).
+
+
+queen([],_). %No queens is a solution for any N queens problem. All queens are in a safe position.
+
+queen([Q|Qlist],N) :-
+
+	queen(Qlist, N), %first we solve the subproblem
+
+	%we then generate all possible positions for queen Q
+	up2N(1,N,Candidate_positions_for_queenQ),
+
+	%we pick one of such position
+	member(Q, Candidate_positions_for_queenQ),
+
+	%we check whether the queen Q is safe
+	check_solution(Q,Qlist, 1).
+
+
+
+check_solution(_,[], _).
+
+check_solution(Q,[Q1|Qlist],Xdist) :-
+	Q =\= Q1, %not on the same row
+	Test is abs(Q1-Q),
+	Test =\= Xdist, %diagonal distance
+	Xdist1 is Xdist + 1,
+	check_solution(Q,Qlist,Xdist1).
+    
+#8:  Write a program to solve 8 puzzle problem using Prolog.
+
+
+test(Plan):-
+    write('Initial state:'),nl,
+    Init= [at(tile4,1), at(tile3,2), at(tile8,3), at(empty,4), at(tile2,5), at(tile6,6), at(tile5,7), at(tile1,8), at(tile7,9)],
+    write_sol(Init),
+    Goal= [at(tile1,1), at(tile2,2), at(tile3,3), at(tile4,4), at(empty,5), at(tile5,6), at(tile6,7), at(tile7,8), at(tile8,9)],
+    nl,write('Goal state:'),nl,
+    write(Goal),nl,nl,
+    solve(Init,Goal,Plan).
+
+solve(State, Goal, Plan):-
+    solve(State, Goal, [], Plan).
+
+%Determines whether Current and Destination tiles are a valid move.
+is_movable(X1,Y1) :- (1 is X1 - Y1) ; (-1 is X1 - Y1) ; (3 is X1 - Y1) ; (-3 is X1 - Y1).
+
+
+% This predicate produces the plan. Once the Goal list is a subset
+% of the current State the plan is complete and it is written to
+% the screen using write_sol/1.
+
+solve(State, Goal, Plan, Plan):-
+    is_subset(Goal, State), nl,
+    write_sol(Plan).
+
+solve(State, Goal, Sofar, Plan):-
+    act(Action, Preconditions, Delete, Add),
+    is_subset(Preconditions, State),
+    \+ member(Action, Sofar),
+    delete_list(Delete, State, Remainder),
+    append(Add, Remainder, NewState),
+    solve(NewState, Goal, [Action|Sofar], Plan).
+
+% The problem has three operators.
+% 1st arg = name
+% 2nd arg = preconditions
+% 3rd arg = delete list
+% 4th arg = add list.
+
+% Tile can move to new position only if the destination tile is empty & Manhattan distance = 1
+act(move(X,Y,Z),
+    [at(X,Y), at(empty,Z), is_movable(Y,Z)],
+    [at(X,Y), at(empty,Z)],
+    [at(X,Z), at(empty,Y)]).
+
+
+% Utility predicates.
+
+% Check is first list is a subset of the second
+
+is_subset([H|T], Set):-
+    member(H, Set),
+    is_subset(T, Set).
+is_subset([], _).
+
+% Remove all elements of 1st list from second to create third.
+
+delete_list([H|T], Curstate, Newstate):-
+    remove(H, Curstate, Remainder),
+    delete_list(T, Remainder, Newstate).
+delete_list([], Curstate, Curstate).
+
+remove(X, [X|T], T).
+remove(X, [H|T], [H|R]):-
+    remove(X, T, R).
+
+write_sol([]).
+write_sol([H|T]):-
+    write_sol(T),
+    write(H), nl.
+
+append([H|T], L1, [H|L2]):-
+    append(T, L1, L2).
+append([], L, L).
+
+member(X, [X|_]).
+member(X, [_|T]):-
+    member(X, T).
